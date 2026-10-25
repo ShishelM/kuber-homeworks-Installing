@@ -1,0 +1,23 @@
+[all]
+%{ for name, node in nodes ~}
+${name} ansible_host=${node.external_ip} ip=${node.internal_ip} ansible_user=ubuntu
+%{ endfor ~}
+
+[kube_control_plane]
+master-1
+
+[etcd]
+master-1
+
+[kube_node]
+worker-1
+worker-2
+worker-3
+worker-4
+
+[calico_rr]
+
+[k8s_cluster:children]
+kube_control_plane
+kube_node
+calico_rr
