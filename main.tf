@@ -25,17 +25,18 @@ resource "yandex_compute_instance" "k8s_node" {
   }
 
   network_interface {
-    # Переключаем подсети в зависимости от настроек зоны ноды
     subnet_id = (
       each.value.zone == "ru-central1-a" ? yandex_vpc_subnet.subnet_a.id :
       each.value.zone == "ru-central1-d" ? yandex_vpc_subnet.subnet_d.id :
       yandex_vpc_subnet.subnet_e.id
     )
     nat       = each.key == "master-1" ? true : false
+    
+    security_group_ids = [yandex_vpc_security_group.k8s_sg.id]
   }
 
   metadata = {
-    user-data          = file("./cloud-init.yml")
+    ssh-keys           = "ubuntu:${file("~/.ssh/id_ed25519.pub")}"
     serial-port-enable = 1
   }
 }
