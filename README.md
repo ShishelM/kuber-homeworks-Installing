@@ -81,7 +81,7 @@ sudo chown \$(id -u):(id -g) HOME/.kube/config
 ```bash
 kubectl get nodes -o wide
 ```
-![alt text](image.png)
+![alt text](img/image.png)
 
 ### 3.2 Статус системных компонентов (Pods)
 Все служебные поды и CNI-плагин внутри пространства имён `kube-system` запущены и функционируют в штатном режиме без единого рестарта:
@@ -90,7 +90,7 @@ kubectl get nodes -o wide
 kubectl get pods -n kube-system
 ```
 
-![alt text](image-1.png)
+![alt text](img/image-1.png)
 
 ---
 
